@@ -1,54 +1,38 @@
 <?php
 
+use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::get('/', [PageController::class, 'home'])
+    ->name('home');
+
+Route::get('/beranda', [PageController::class, 'home'])
+    ->name('beranda');
+
+Route::get('/profil-mahasiswa/{nrp?}', [PageController::class, 'profile'])
+    ->where('nrp', '[0-9]{10}')
+    ->name('profile');
+
+Route::get('/ide-agent', [PageController::class, 'agent'])
+    ->name('agent');
+
+Route::post('/ide-agent', [PageController::class, 'submitIdea'])
+    ->name('agent.submit');
+
+Route::get('/hitung-ipk/{ip1}/{ip2}', [PageController::class, 'ipk'])
+    ->name('hitung.ipk');
+
 
 Route::get('/mahasiswa/{nrp}', function ($nrp) {
-    return view('mahasiswa', compact('nrp'));
+    return redirect()->route('profile');
 })->where('nrp', '[0-9]{10}')
-->name('mahasiswa');
-
-Route::get('/hitung-ipk/{ip1}/{ip2}', function ($ip1, $ip2) {
-    $jumlah = $ip1 + $ip2;
-    $rataRata = $jumlah / 2;
-
-    return view('ipk', compact(
-        'ip1',
-        'ip2',
-        'jumlah',
-        'rataRata'
-    ));
-})->name('hitung.ipk');
-
-Route::prefix('dashboard')->group(function () {
-
-    Route::get('/mahasiswa/{nrp}', function ($nrp) {
-        return view('mahasiswa', compact('nrp'));
-    })->where('nrp', '[0-9]{10}')
-      ->name('mahasiswa');
-
-    Route::get('/hitung-ipk/{ip1}/{ip2}', function ($ip1, $ip2) {
-        $jumlah = $ip1 + $ip2;
-        $rataRata = $jumlah / 2;
-
-        return view('ipk', compact(
-            'ip1',
-            'ip2',
-            'jumlah',
-            'rataRata'
-        ));
-    })->name('hitung.ipk');
-    Route::get('/agent/{tema?}', function ($tema = null) {
-        return view('agent', compact('tema'));
-    })->name('agent');
-});
+  ->name('mahasiswa');
 
 Route::get('/agent/{tema?}', function ($tema = null) {
-    return view('agent', compact('tema'));
-})->name('agent');
+    return redirect()->route('agent', [
+        'tema' => $tema
+    ]);
+})->name('legacy.agent');
 
 Route::fallback(function () {
     return response()->view('errors.404', [], 404);

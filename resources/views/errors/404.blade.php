@@ -1,21 +1,17 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Halaman Tidak Ditemukan</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-950 text-gray-100 font-sans min-h-screen
-             flex items-center justify-center px-6">
+@extends('layouts.app')
+
+@section('content')
+
+<main class="flex-grow flex items-center justify-center
+             px-6 py-20">
 
     <div class="text-center max-w-lg">
 
-        <p class="text-emerald-400 font-mono text-sm mb-4">
+        <p class="text-emerald-500 font-mono text-sm mb-4">
             ERROR 404
         </p>
 
-        <h1 class="text-7xl font-extrabold text-white">
+        <h1 class="text-7xl font-extrabold">
             404
         </h1>
 
@@ -23,20 +19,20 @@
             Halaman Tidak Ditemukan
         </h2>
 
-        <p class="text-gray-400 mt-3 leading-relaxed">
-            Halaman yang kamu cari tidak tersedia atau URL yang dimasukkan
-            tidak sesuai dengan route yang tersedia.
+        <p class="text-gray-500 mt-3 leading-relaxed">
+            Halaman yang kamu cari tidak tersedia atau URL yang
+            dimasukkan tidak sesuai dengan route yang tersedia.
         </p>
 
         <a href="{{ route('home') }}"
            class="inline-block mt-8 px-6 py-3
                   bg-emerald-500 hover:bg-emerald-400
                   text-gray-950 rounded-lg font-bold transition">
-            ← Kembali ke Home
+            ← Kembali ke Beranda
         </a>
 
     </div>
 
-</body>
-</html>
-```
+</main>
+
+@endsection
